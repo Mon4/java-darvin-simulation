@@ -9,22 +9,24 @@ public class Animal implements WorldElement{
     private Vector2d position;
     private int energy;
     private List<Integer> dna;
-    private int activeGen;
 
     public Animal() {
         this.currentForwarding = MapDirection.NORTH;
         this.position = new Vector2d(2, 2);
         this.energy = 100;
         this.dna = List.of(0);
-        this.activeGen = 0;
     }
-
-    public Animal(MapDirection currentForwarding, Vector2d position, int energy, List<Integer> dna, int activeGen) {
-        this.currentForwarding = currentForwarding;
+    public Animal(Vector2d position) {
+        this.currentForwarding = MapDirection.NORTH;
+        this.position = position;
+        this.energy = 100;
+        this.dna = new ArrayList<>(List.of(1, 0, 2));
+    }
+    public Animal(Vector2d position, int energy, List<Integer> dna) {
+        this.currentForwarding = MapDirection.NORTH;
         this.position = position;
         this.energy = energy;
         this.dna = dna;
-        this.activeGen = activeGen;
     }
 
 

@@ -1,15 +1,30 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
+import static java.lang.Math.sqrt;
 
 public class Map implements MoveValidator, WorldMap {
     protected java.util.Map<Vector2d, Animal> animals = new HashMap<>();
     protected java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
     protected java.util.Map<Vector2d, PoisonFruit> poisonFruits = new HashMap<>();
     final private List<MapChangeListener> observers = new ArrayList<>();
+    private int grassNumber;
+
+    public Map(int grassNumber) {
+        super();
+        this.grassNumber = grassNumber;
+        Random rand = new Random();
+        int x, y;
+        for (int i = 0; i < grassNumber; i++) {
+            do {
+                x = rand.nextInt(0, (int) (sqrt(grassNumber) * 10));
+                y = rand.nextInt(0, (int) (sqrt(grassNumber) * 10));
+            } while (isOccupied(new Vector2d(x, y)));
+            Grass grass = new Grass(new Vector2d(x, y));
+            grasses.put(new Vector2d(x, y), grass);
+        }
+    }
 
     @Override
     public boolean canMoveTo(Vector2d position) {  // change to check if not out of boundaries
@@ -55,7 +70,21 @@ public class Map implements MoveValidator, WorldMap {
 
     @Override
     public WorldElement objectAt(Vector2d position) {
+        if (grasses.get(position) != null){
+            return grasses.get(position);
+        }
+        else if (animals.get(position) != null){
+            return animals.get(position);
+        }
+        else if (poisonFruits.get(position) != null){
+            return poisonFruits.get(position);
+        }
         return null;
+    }
+
+    @Override
+    public void move(Animal animal, int direction) {
+        //to do
     }
 
     @Override
@@ -65,7 +94,25 @@ public class Map implements MoveValidator, WorldMap {
 
     @Override
     public void addObserver(MapChangeListener observer) {
-
+        observers.add(observer);
+    }
+    @Override
+    public Boundary getCurrentBounds() {
+        int width = 0;
+        int height = 0;
+        for (Vector2d position : grasses.keySet()) {
+            if (position.getX() > width)
+                width = position.getX();
+            if (position.getY() > height)
+                height = position.getY();
+        }
+        for (Vector2d position : animals.keySet()) {
+            if (position.getX() > width)
+                width = position.getX();
+            if (position.getY() > height)
+                height = position.getY();
+        }
+        return new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
     }
 
 

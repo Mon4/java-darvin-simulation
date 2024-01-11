@@ -18,19 +18,19 @@
             <VBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="map width" alignment="CENTER_RIGHT" />
-                    <TextField fx:id="mapWidth" text="15"/>
+                    <TextField fx:id="mapWidthText" text="15"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="map height" alignment="CENTER_RIGHT"/>
-                    <TextField fx:id="mapHeight" text="10"/>
+                    <TextField fx:id="mapHeightText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="map type" alignment="CENTER_RIGHT"/>
-                    <ComboBox/>
+                    <ComboBox fx:id="mapTypeCombo"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start grass number"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="grassNumberText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="energy added by eating grass"/>
@@ -38,7 +38,7 @@
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="daily new grass number"/>
-                    <TextField text="10"/>
+                    <TextField text="5"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="plant growth option"/>
@@ -46,7 +46,7 @@
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start animal number"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="StartAnimalsText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="needed reproduction energy level"/>

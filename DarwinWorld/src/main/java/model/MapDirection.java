@@ -5,14 +5,14 @@ public enum MapDirection {
     @Override
     public String toString() {
         return switch (this) {
-            case NORTH -> "↑";
+            case NORTH -> "^";
             case NORTHEAST -> "↗";
             case NORTHWEST -> "↖";
-            case SOUTH -> "↓";
-            case EAST -> "→";
+            case SOUTH -> "v";
+            case EAST -> ">";
             case SOUTHEAST -> "↘";
             case SOUTHWEST -> "↙";
-            case WEST -> "←";
+            case WEST -> "<";
         };
     }
     public MapDirection next(){

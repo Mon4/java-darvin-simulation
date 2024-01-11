@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import model.*;
 
@@ -21,6 +22,7 @@ public class SimulationPresenter implements MapChangeListener {
     public Button startButton;
     @FXML
     private WorldMap map;
+
 
 
     public void setWorldMap(WorldMap map){
@@ -92,7 +94,9 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     public void onSimulationStartClicked() {
+
         ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
+
         Simulation simulation = new Simulation(positions, this.map);
         List<Simulation> simulations = new ArrayList<>();
         simulations.add(simulation);

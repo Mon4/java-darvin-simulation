@@ -10,6 +10,8 @@ public class Animal implements WorldElement{
     private int energy;
     private List<Integer> dna;
     private int dnaIndex;
+    private int childrenNumber;
+    private int lifeSpan;
 
     public List<Integer> getDna() {
         return dna;
@@ -40,7 +42,7 @@ public class Animal implements WorldElement{
 
 
     public void move(Map map) {
-        int up = map.getCurrentBounds().upperRight().getY();
+        int up = map.getCurrentBounds().upperRight().getY(); //to do prettier
         int down = map.getCurrentBounds().lowerLeft().getY();
         int left = map.getCurrentBounds().lowerLeft().getX();
         int right = map.getCurrentBounds().upperRight().getX();

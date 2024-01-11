@@ -30,13 +30,13 @@ public class SimulationApp extends Application {
         });
     }
 
-    public void startNewSimulation(int width, int height) throws IOException{
+    public void startNewSimulation(int grassNumber, int animalsNumber, int width, int height) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane viewRoot = loader.load();
 
         SimulationPresenter presenter = loader.getController();
-        Map map = new Map(2, width, height);
+        Map map = new Map(grassNumber, animalsNumber, width, height);
         presenter.setWorldMap(map);
 
         Stage stage = new Stage();

@@ -2,8 +2,6 @@ package model;
 
 import java.util.*;
 
-import static java.lang.Math.sqrt;
-
 public class Map implements WorldMap {
     private java.util.Map<Vector2d, Animal> animals = new HashMap<>();
     private java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
@@ -11,13 +9,15 @@ public class Map implements WorldMap {
     final private List<MapChangeListener> observers = new ArrayList<>();
     final private int width;
     final private int height;
-    private int grassNumber;
+    final private int grassNumber;
+    final private int animalsNumber;
 
-    public Map(int grassNumber, int width, int height) {
+    public Map(int grassNumber, int animalsNumber, int width, int height) {
         super();
         this.height = height;
         this.width = width;
         this.grassNumber = grassNumber;
+        this.animalsNumber = animalsNumber;
         Random rand = new Random();
         int x, y;
         for (int i = 0; i < grassNumber; i++) {
@@ -29,17 +29,21 @@ public class Map implements WorldMap {
             Grass grass = new Grass(new Vector2d(x, y));
             grasses.put(new Vector2d(x, y), grass);
         }
+
+        for (int i = 0; i < animalsNumber; i++) {
+            x = rand.nextInt(0, width);
+            y = rand.nextInt(0, height);
+
+            Animal animal = new Animal(new Vector2d(x, y));
+            animals.put(new Vector2d(x, y), animal);
+        }
+
     }
 
     public void mapChanged(String message){
         for(MapChangeListener observer : observers){
             observer.mapChanged(this, message);
         }
-    }
-
-    @Override
-    public int getId() {
-        return 0;
     }
 
     @Override
@@ -82,10 +86,6 @@ public class Map implements WorldMap {
                 + animal.getPosition().toString());
     }
 
-    @Override
-    public Collection<WorldElement> getElements() {
-        return null;
-    }
 
     @Override
     public void addObserver(MapChangeListener observer) {

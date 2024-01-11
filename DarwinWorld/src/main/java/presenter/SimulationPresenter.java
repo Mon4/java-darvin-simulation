@@ -91,7 +91,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     @FXML
-    public void onSimulationStartClicked(ActionEvent actionEvent) {
+    public void onSimulationStartClicked() {
         ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
         Simulation simulation = new Simulation(positions, this.map);
         List<Simulation> simulations = new ArrayList<>();

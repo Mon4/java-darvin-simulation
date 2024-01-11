@@ -1,31 +1,54 @@
 package model;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Map;
 import presenter.SimulationPresenter;
+import presenter.StartPresenter;
+
+import java.io.IOException;
 
 public class SimulationApp extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("start.fxml"));
+        BorderPane viewRoot = loader.load();
+
+        StartPresenter presenter = loader.getController();
+        presenter.setApplication(this);
+
+        configureStage(primaryStage, viewRoot);
+        primaryStage.show();
+
+        primaryStage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
+
+    public void startNewSimulation(int width, int height) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane viewRoot = loader.load();
 
         SimulationPresenter presenter = loader.getController();
-        Map map = new Map(2);
+        Map map = new Map(2, width, height);
         presenter.setWorldMap(map);
 
-        configureStage(primaryStage, viewRoot);
-        primaryStage.show();
+        Stage stage = new Stage();
+        configureStage(stage, viewRoot);
+        stage.show();
+
+        presenter.onSimulationStartClicked();
     }
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("model.Simulation app");
+        primaryStage.setTitle("Darwin World");
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }

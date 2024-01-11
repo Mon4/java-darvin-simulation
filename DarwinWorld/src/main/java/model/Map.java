@@ -5,22 +5,27 @@ import java.util.*;
 import static java.lang.Math.sqrt;
 
 public class Map implements WorldMap {
-    protected java.util.Map<Vector2d, Animal> animals = new HashMap<>();
-    protected java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
-    protected java.util.Map<Vector2d, PoisonFruit> poisonFruits = new HashMap<>();
+    private java.util.Map<Vector2d, Animal> animals = new HashMap<>();
+    private java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
+    private java.util.Map<Vector2d, PoisonFruit> poisonFruits = new HashMap<>();
     final private List<MapChangeListener> observers = new ArrayList<>();
+    final private int width;
+    final private int height;
     private int grassNumber;
 
-    public Map(int grassNumber) {
+    public Map(int grassNumber, int width, int height) {
         super();
+        this.height = height;
+        this.width = width;
         this.grassNumber = grassNumber;
         Random rand = new Random();
         int x, y;
         for (int i = 0; i < grassNumber; i++) {
             do {
-                x = rand.nextInt(0, (int) (sqrt(grassNumber) * 10));
-                y = rand.nextInt(0, (int) (sqrt(grassNumber) * 10));
+                x = rand.nextInt(0, width);  // trzeba zmienić, bo trawki mają się robić na równiku
+                y = rand.nextInt(0, height);
             } while (isOccupied(new Vector2d(x, y)));
+
             Grass grass = new Grass(new Vector2d(x, y));
             grasses.put(new Vector2d(x, y), grass);
         }
@@ -38,7 +43,7 @@ public class Map implements WorldMap {
     }
 
     @Override
-    public boolean place(Animal animal) throws PositionAlreadyOccupiedException{
+    public boolean place(Animal animal){
         int x = animal.getPosition().getX();
         int y = animal.getPosition().getY();
 
@@ -88,20 +93,6 @@ public class Map implements WorldMap {
     }
     @Override
     public Boundary getCurrentBounds() {
-        int width = 0;
-        int height = 0;
-        for (Vector2d position : grasses.keySet()) {
-            if (position.getX() > width)
-                width = position.getX();
-            if (position.getY() > height)
-                height = position.getY();
-        }
-        for (Vector2d position : animals.keySet()) {
-            if (position.getX() > width)
-                width = position.getX();
-            if (position.getY() > height)
-                height = position.getY();
-        }
         return new Boundary(new Vector2d(0, 0), new Vector2d(width, height));
     }
 

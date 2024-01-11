@@ -4,7 +4,7 @@ import java.util.*;
 
 import static java.lang.Math.sqrt;
 
-public class Map implements MoveValidator, WorldMap {
+public class Map implements WorldMap {
     protected java.util.Map<Vector2d, Animal> animals = new HashMap<>();
     protected java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
     protected java.util.Map<Vector2d, PoisonFruit> poisonFruits = new HashMap<>();
@@ -26,16 +26,6 @@ public class Map implements MoveValidator, WorldMap {
         }
     }
 
-    @Override
-    public boolean canMoveTo(Vector2d position) {  // change to check if not out of boundaries
-        for (Vector2d p : animals.keySet()) {
-            if (p.equals(position)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void mapChanged(String message){
         for(MapChangeListener observer : observers){
             observer.mapChanged(this, message);
@@ -53,14 +43,9 @@ public class Map implements MoveValidator, WorldMap {
         int y = animal.getPosition().getY();
 
         Vector2d position = new Vector2d(x, y);
-        if (canMoveTo(position)){
             animals.put(position, animal);
             mapChanged("animal was placed on position: " + position.toString());
             return true;
-        }
-        else {
-            throw new PositionAlreadyOccupiedException(position);
-        }
     }
 
     @Override
@@ -83,8 +68,13 @@ public class Map implements MoveValidator, WorldMap {
     }
 
     @Override
-    public void move(Animal animal, int direction) {
-        //to do
+    public void move(Animal animal) {
+        Vector2d oldPosition = animal.getPosition();
+        animals.remove(oldPosition);
+        animal.move(this);
+        animals.put(animal.getPosition(), animal);
+        mapChanged("Animal was moved from: " + oldPosition.toString() + " to position: "
+                + animal.getPosition().toString());
     }
 
     @Override

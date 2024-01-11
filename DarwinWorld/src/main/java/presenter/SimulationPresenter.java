@@ -25,7 +25,7 @@ public class SimulationPresenter implements MapChangeListener {
 
     public void setWorldMap(WorldMap map){
         this.map = map;
-        map.addObserver(this);  // to trzeba tam jeszcze ustawić
+        map.addObserver(this);
         Platform.runLater(() -> {
             drawMap(map);
         });
@@ -45,7 +45,7 @@ public class SimulationPresenter implements MapChangeListener {
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
         Platform.runLater(() -> {
-            this.drawMap(worldMap);
+            drawMap(worldMap);
         });
     }
 
@@ -92,15 +92,12 @@ public class SimulationPresenter implements MapChangeListener {
 
     @FXML
     public void onSimulationStartClicked(ActionEvent actionEvent) {
-        System.out.println("aaa");
-        ArrayList<Integer> moves = new ArrayList<>(List.of(1, 0, 1, 2));
         ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
-        Simulation simulation = new Simulation(positions, moves, this.map);
+        Simulation simulation = new Simulation(positions, this.map);
         List<Simulation> simulations = new ArrayList<>();
         simulations.add(simulation);
         SimulationEngine simulationEngine = new SimulationEngine(simulations);
         simulationEngine.runAsyncInThreadPool();
-
     }
 
 }

@@ -9,6 +9,15 @@ public class Animal implements WorldElement{
     private Vector2d position;
     private int energy;
     private List<Integer> dna;
+    private int dnaIndex;
+
+    public List<Integer> getDna() {
+        return dna;
+    }
+
+    public int getDnaIndex() {
+        return dnaIndex;
+    }
 
     public Animal() {
         this.currentForwarding = MapDirection.NORTH;
@@ -20,7 +29,7 @@ public class Animal implements WorldElement{
         this.currentForwarding = MapDirection.NORTH;
         this.position = position;
         this.energy = 100;
-        this.dna = new ArrayList<>(List.of(1, 0, 2));
+        this.dna = new ArrayList<>(List.of(0, 1));
     }
     public Animal(Vector2d position, int energy, List<Integer> dna) {
         this.currentForwarding = MapDirection.NORTH;
@@ -30,13 +39,31 @@ public class Animal implements WorldElement{
     }
 
 
-    public void move(int direction, MoveValidator validator) {  // add going around the world
-        for(int i = 0; i < direction; i ++){
-            this.currentForwarding = currentForwarding.next();
-            Vector2d positionTempForward = position.add(currentForwarding.toUnitVector());
-            if (validator.canMoveTo(positionTempForward)){
-                position = positionTempForward;}
-        }
+    public void move(Map map) {
+        int up = map.getCurrentBounds().upperRight().getY();
+        int down = map.getCurrentBounds().lowerLeft().getY();
+        int left = map.getCurrentBounds().lowerLeft().getX();
+        int right = map.getCurrentBounds().upperRight().getX();
+
+        int direction = this.dna.get(this.dnaIndex);
+        for(int i = 0; i < direction; i ++) this.currentForwarding = currentForwarding.next();  // change forwarding
+
+        Vector2d positionTempForward = position.add(currentForwarding.toUnitVector());
+
+        if(positionTempForward.getY() > up || positionTempForward.getY() < down){
+            for(int i = 0; i < 4; i ++) this.currentForwarding = currentForwarding.next();  // change forwarding opposite
+            position = position.add(currentForwarding.toUnitVector());}
+        else if(positionTempForward.getX() < left)
+            position = new Vector2d(right, positionTempForward.getY());
+        else if(positionTempForward.getX() > right)
+            position = new Vector2d(left, positionTempForward.getY());
+        else
+            position = positionTempForward;
+
+        if (this.dnaIndex == dna.size()-1)
+            this.dnaIndex = 0;
+        else
+            this.dnaIndex++;
     }
 
 

@@ -11,8 +11,15 @@ public class Map implements WorldMap {
     final private int height;
     final private int grassNumber;
     final private int animalsNumber;
+    int up = getCurrentBounds().upperRight().getY();
+    int down = getCurrentBounds().lowerLeft().getY();
+    int left = getCurrentBounds().lowerLeft().getX();
+    int right = getCurrentBounds().upperRight().getX();
 
-    public Map(int grassNumber, int animalsNumber, int width, int height) {
+    @Override
+    public java.util.Map<Vector2d, Animal> getAnimals() {return animals;}
+
+    public Map(int grassNumber, int animalsNumber, int width, int height, int newAnimalEnergy, int grassEnergy) {
         super();
         this.height = height;
         this.width = width;
@@ -30,11 +37,11 @@ public class Map implements WorldMap {
             grasses.put(new Vector2d(x, y), grass);
         }
 
-        for (int i = 0; i < animalsNumber; i++) {
+        for (int i = 0; i < animalsNumber; i++) {  // może przed stworzeniem symulacji
             x = rand.nextInt(0, width);
             y = rand.nextInt(0, height);
 
-            Animal animal = new Animal(new Vector2d(x, y));
+            Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy);
             animals.put(new Vector2d(x, y), animal);
         }
 

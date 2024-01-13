@@ -6,12 +6,12 @@ public enum MapDirection {
     public String toString() {
         return switch (this) {
             case NORTH -> "^";
-            case NORTHEAST -> "↗";
-            case NORTHWEST -> "↖";
+            case NORTHEAST -> "/";
+            case NORTHWEST -> "\\";
             case SOUTH -> "v";
             case EAST -> ">";
-            case SOUTHEAST -> "↘";
-            case SOUTHWEST -> "↙";
+            case SOUTHEAST -> "\\";
+            case SOUTHWEST -> "/";
             case WEST -> "<";
         };
     }

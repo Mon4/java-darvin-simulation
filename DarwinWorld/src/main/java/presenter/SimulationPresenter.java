@@ -28,6 +28,13 @@ public class SimulationPresenter implements MapChangeListener {
     public void setWorldMap(WorldMap map){
         this.map = map;
         map.addObserver(this);
+
+        Simulation simulation = new Simulation(this.map);
+        List<Simulation> simulations = new ArrayList<>();
+        simulations.add(simulation);
+        SimulationEngine simulationEngine = new SimulationEngine(simulations);
+        simulationEngine.runAsyncInThreadPool();
+
         Platform.runLater(() -> {
             drawMap(map);
         });
@@ -37,11 +44,6 @@ public class SimulationPresenter implements MapChangeListener {
         gridMap.getChildren().retainAll(gridMap.getChildren().get(0)); // hack to retain visible grid lines
         gridMap.getColumnConstraints().clear();
         gridMap.getRowConstraints().clear();
-    }
-
-    private void drawSquare(){
-        gridMap.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
-        gridMap.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
     }
 
     @Override
@@ -60,8 +62,6 @@ public class SimulationPresenter implements MapChangeListener {
     public void drawMap(WorldMap map){
         clearGrid();
         Vector2d size = map.getCurrentBounds().upperRight().subtract(map.getCurrentBounds().lowerLeft());
-        int startX = map.getCurrentBounds().lowerLeft().getX();
-        int startY = map.getCurrentBounds().lowerLeft().getY();
         int width = size.getX();
         int height = size.getY();
 
@@ -90,18 +90,6 @@ public class SimulationPresenter implements MapChangeListener {
                 addLabel(labelContent, x + 1, y + 1);
             }
         }
-    }
-
-    @FXML
-    public void onSimulationStartClicked() {
-
-        ArrayList<Vector2d> positions = new ArrayList<>(List.of(new Vector2d(2,2), new Vector2d(3,4)));
-
-        Simulation simulation = new Simulation(positions, this.map);
-        List<Simulation> simulations = new ArrayList<>();
-        simulations.add(simulation);
-        SimulationEngine simulationEngine = new SimulationEngine(simulations);
-        simulationEngine.runAsyncInThreadPool();
     }
 
 }

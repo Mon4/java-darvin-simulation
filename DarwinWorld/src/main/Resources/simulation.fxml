@@ -18,7 +18,6 @@
         </ScrollPane>
     </center>
     <bottom>
-        <Button fx:id="startButton" text="Start" textAlignment="CENTER" onAction="#onSimulationStartClicked"/>
     </bottom>
 </BorderPane>
 

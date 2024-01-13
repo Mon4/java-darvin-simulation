@@ -30,20 +30,18 @@ public class SimulationApp extends Application {
         });
     }
 
-    public void startNewSimulation(int grassNumber, int animalsNumber, int width, int height) throws IOException{
+    public void startNewSimulation(int grassNumber, int animalsNumber, int width, int height, int newAnimalEnergy, int grassEnergy) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane viewRoot = loader.load();
 
         SimulationPresenter presenter = loader.getController();
-        Map map = new Map(grassNumber, animalsNumber, width, height);
+        Map map = new Map(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy);
         presenter.setWorldMap(map);
 
         Stage stage = new Stage();
         configureStage(stage, viewRoot);
         stage.show();
-
-        presenter.onSimulationStartClicked();
     }
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);

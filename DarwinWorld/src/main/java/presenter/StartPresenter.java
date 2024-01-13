@@ -2,10 +2,15 @@ package presenter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Simulation;
 import model.SimulationApp;
+import model.SimulationEngine;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StartPresenter {
     @FXML
@@ -17,7 +22,27 @@ public class StartPresenter {
     @FXML
     public ComboBox mapTypeCombo;
     @FXML
-    public TextField StartAnimalsText;
+    public TextField startAnimalsText;
+    @FXML
+    public TextField grassEnergyText;
+    @FXML
+    public TextField newGrassText;
+    @FXML
+    public ComboBox plantsCombo;
+    @FXML
+    public TextField minReproductionEnergyText;
+    @FXML
+    public TextField useReproductionEnergyText;
+    @FXML
+    public TextField minMutationEnergyText;
+    @FXML
+    public TextField maxMutationEnergyText;
+    @FXML
+    public ComboBox mutationOptionCombo;
+    @FXML
+    public TextField genomeLen;
+    @FXML
+    public TextField newAnimalEnergyText;
 
     private SimulationApp application;
     public void setApplication(SimulationApp application){
@@ -30,8 +55,13 @@ public class StartPresenter {
             int width = Integer.parseInt(mapWidthText.getText());
             int height = Integer.parseInt(mapHeightText.getText());
             int grassNumber = Integer.parseInt(grassNumberText.getText());
-            int animalsNumber = Integer.parseInt(StartAnimalsText.getText());
-            application.startNewSimulation(grassNumber, animalsNumber, width, height);
+            int animalsNumber = Integer.parseInt(startAnimalsText.getText());
+            int grassEnergy = Integer.parseInt(grassEnergyText.getText());
+            int newGrass = Integer.parseInt(newGrassText.getText());
+            int newAnimalEnergy = Integer.parseInt(newAnimalEnergyText.getText());
+
+
+            application.startNewSimulation(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -33,48 +33,48 @@
                     <TextField fx:id="grassNumberText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
+                    <Label text="new animal energy level"/>
+                    <TextField fx:id="newAnimalEnergyText" text="10"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
                     <Label text="energy added by eating grass"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="grassEnergyText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="daily new grass number"/>
-                    <TextField text="5"/>
+                    <TextField fx:id="newGrassText" text="5"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="plant growth option"/>
-                    <ComboBox/>
+                    <ComboBox fx:id="plantsCombo"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start animal number"/>
-                    <TextField fx:id="StartAnimalsText" text="10"/>
+                    <TextField fx:id="startAnimalsText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="needed reproduction energy level"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="minReproductionEnergyText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="used reproduction energy level"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="useReproductionEnergyText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="min mutation number"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="minMutationEnergyText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="max mutation number"/>
-                    <TextField text="10"/>
+                    <TextField fx:id="maxMutationEnergyText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="mutation option"/>
-                    <ComboBox/>
+                    <ComboBox fx:id="mutationOptionCombo"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="genome length"/>
-                    <TextField text="10"/>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="animal behavior option"/>
-                    <ComboBox/>
+                    <TextField fx:id="genomeLen" text="10"/>
                 </HBox>
             </VBox>
         </GridPane>

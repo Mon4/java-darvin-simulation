@@ -4,18 +4,14 @@ package model;
 import java.util.ArrayList;
 
 public class Simulation implements Runnable{
-    private final ArrayList<Animal> animals = new ArrayList<>();
+    private final ArrayList<Animal> animals;
     private int currentAnimalIndex = 0;
-    private WorldMap map;
+    private final WorldMap map;
 
 
-    public Simulation(ArrayList<Vector2d> positions, WorldMap map) {
+    public Simulation(WorldMap map) {
         this.map = map;
-
-        for (Vector2d pos : positions) {
-            Animal animal = new Animal(pos);
-            animals.add(animal);
-        }
+        this.animals = new ArrayList<>(map.getAnimals().values());
     }
 
     public void run(){
@@ -27,12 +23,11 @@ public class Simulation implements Runnable{
             }
         }
 
-
-//        for (int direction : directions){
         while(true){
             Animal currentAnimal = animals.get(currentAnimalIndex);
             this.map.move(currentAnimal);
             this.currentAnimalIndex = (currentAnimalIndex + 1) % animals.size();
+            currentAnimal.changeEnergy(-10);
 
             try {
                 Thread.sleep(1000);

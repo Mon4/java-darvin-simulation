@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Animal implements WorldElement{
     private MapDirection currentForwarding;
@@ -12,53 +13,49 @@ public class Animal implements WorldElement{
     private int dnaIndex;
     private int childrenNumber;
     private int lifeSpan;
+    public void changeEnergy(int level) {this.energy += level;}
 
-    public List<Integer> getDna() {
-        return dna;
-    }
 
-    public int getDnaIndex() {
-        return dnaIndex;
-    }
 
-    public Animal() {
-        this.currentForwarding = MapDirection.NORTH;
-        this.position = new Vector2d(2, 2);
-        this.energy = 100;
-        this.dna = List.of(0);
-    }
+    //animal to map ??
     public Animal(Vector2d position) {
-        this.currentForwarding = MapDirection.NORTH;
+        this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
         this.position = position;
-        this.energy = 100;
         this.dna = new ArrayList<>(List.of(0, 1));
-    }
-    public Animal(Vector2d position, int energy, List<Integer> dna) {
-        this.currentForwarding = MapDirection.NORTH;
-        this.position = position;
-        this.energy = energy;
-        this.dna = dna;
+        this.dnaIndex = new Random().nextInt(dna.size());
     }
 
+    // regular animal
+    public Animal(Vector2d position, int newAnimalEnergy) {
+        this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
+        this.position = position;
+        this.energy = newAnimalEnergy;
+        this.dna = new ArrayList<>(List.of(0, 1));
+        this.dnaIndex = new Random().nextInt(dna.size());
+    }
+
+    // new born animal
+    public Animal(Vector2d position, int energy, List<Integer> dna) {
+        this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
+        this.position = position;
+        this.energy = 50;
+        this.dna = dna;
+        this.dnaIndex = new Random().nextInt(dna.size());
+    }
 
     public void move(Map map) {
-        int up = map.getCurrentBounds().upperRight().getY(); //to do prettier
-        int down = map.getCurrentBounds().lowerLeft().getY();
-        int left = map.getCurrentBounds().lowerLeft().getX();
-        int right = map.getCurrentBounds().upperRight().getX();
-
         int direction = this.dna.get(this.dnaIndex);
         for(int i = 0; i < direction; i ++) this.currentForwarding = currentForwarding.next();  // change forwarding
 
         Vector2d positionTempForward = position.add(currentForwarding.toUnitVector());
 
-        if(positionTempForward.getY() > up || positionTempForward.getY() < down){
-            for(int i = 0; i < 4; i ++) this.currentForwarding = currentForwarding.next();  // change forwarding opposite
+        if(positionTempForward.getY() > map.up || positionTempForward.getY() < map.down){
+            for(int i = 0; i < 4; i ++) this.currentForwarding = currentForwarding.next();  // changes forwarding to opposite
             position = position.add(currentForwarding.toUnitVector());}
-        else if(positionTempForward.getX() < left)
-            position = new Vector2d(right, positionTempForward.getY());
-        else if(positionTempForward.getX() > right)
-            position = new Vector2d(left, positionTempForward.getY());
+        else if(positionTempForward.getX() < map.left)
+            position = new Vector2d(map.right, positionTempForward.getY());
+        else if(positionTempForward.getX() > map.right)
+            position = new Vector2d(map.left, positionTempForward.getY());
         else
             position = positionTempForward;
 

@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.layout.Region?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
@@ -28,30 +27,34 @@
                     <Label text="map type" alignment="CENTER_RIGHT"/>
                     <ComboBox fx:id="mapTypeCombo"/>
                 </HBox>
+
+                <HBox alignment="CENTER_RIGHT">
+                    <Label text="start animal number"/>
+                    <TextField fx:id="startAnimalsText" text="10"/>
+                </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start grass number"/>
                     <TextField fx:id="grassNumberText" text="10"/>
                 </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="new animal energy level"/>
-                    <TextField fx:id="newAnimalEnergyText" text="10"/>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="energy added by eating grass"/>
-                    <TextField fx:id="grassEnergyText" text="10"/>
-                </HBox>
+
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="daily new grass number"/>
                     <TextField fx:id="newGrassText" text="5"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
+                    <Label text="new animal energy level"/>
+                    <TextField fx:id="newAnimalEnergyText" text="100"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <Label text="energy added by eating grass"/>
+                    <TextField fx:id="grassEnergyText" text="10"/>
+                </HBox>
+
+                <HBox alignment="CENTER_RIGHT">
                     <Label text="plant growth option"/>
                     <ComboBox fx:id="plantsCombo"/>
                 </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="start animal number"/>
-                    <TextField fx:id="startAnimalsText" text="10"/>
-                </HBox>
+
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="needed reproduction energy level"/>
                     <TextField fx:id="minReproductionEnergyText" text="10"/>

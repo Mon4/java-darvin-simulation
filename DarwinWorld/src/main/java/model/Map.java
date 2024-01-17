@@ -9,8 +9,6 @@ public class Map implements WorldMap {
     final private List<MapChangeListener> observers = new ArrayList<>();
     final private int width;
     final private int height;
-    final private int grassNumber;
-    final private int animalsNumber;
     int up = getCurrentBounds().upperRight().getY();
     int down = getCurrentBounds().lowerLeft().getY();
     int left = getCurrentBounds().lowerLeft().getX();
@@ -19,32 +17,38 @@ public class Map implements WorldMap {
     @Override
     public java.util.Map<Vector2d, Animal> getAnimals() {return animals;}
 
-    public Map(int grassNumber, int animalsNumber, int width, int height, int newAnimalEnergy, int grassEnergy) {
-        super();
-        this.height = height;
-        this.width = width;
-        this.grassNumber = grassNumber;
-        this.animalsNumber = animalsNumber;
+    public void addGrasses(int grassNumber){
         Random rand = new Random();
         int x, y;
         for (int i = 0; i < grassNumber; i++) {
             do {
-                x = rand.nextInt(0, width);  // trzeba zmienić, bo trawki mają się robić na równiku
-                y = rand.nextInt(0, height);
+                x = rand.nextInt(0, width+1);  // trzeba zmienić, bo trawki mają się robić na równiku
+                y = rand.nextInt(0, height+1);
             } while (isOccupied(new Vector2d(x, y)));
 
             Grass grass = new Grass(new Vector2d(x, y));
             grasses.put(new Vector2d(x, y), grass);
         }
+    }
 
+    public void addAnimals(int animalsNumber, int newAnimalEnergy){
+        Random rand = new Random();
+        int x, y;
         for (int i = 0; i < animalsNumber; i++) {  // może przed stworzeniem symulacji
-            x = rand.nextInt(0, width);
-            y = rand.nextInt(0, height);
+            x = rand.nextInt(0, width+1);
+            y = rand.nextInt(0, height+1);
 
             Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy);
             animals.put(new Vector2d(x, y), animal);
         }
+    }
 
+
+
+    public Map(int width, int height) {
+//        super();
+        this.height = height;
+        this.width = width;
     }
 
     public void mapChanged(String message){

@@ -57,11 +57,11 @@ public class StartPresenter {
             int grassNumber = Integer.parseInt(grassNumberText.getText());
             int animalsNumber = Integer.parseInt(startAnimalsText.getText());
             int grassEnergy = Integer.parseInt(grassEnergyText.getText());
-            int newGrass = Integer.parseInt(newGrassText.getText());
+            int newGrassNumber = Integer.parseInt(newGrassText.getText());
             int newAnimalEnergy = Integer.parseInt(newAnimalEnergyText.getText());
 
 
-            application.startNewSimulation(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy);
+            application.startNewSimulation(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy, newGrassNumber);
         } catch (IOException e) {
             e.printStackTrace();
         }

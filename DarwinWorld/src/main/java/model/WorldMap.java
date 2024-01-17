@@ -12,6 +12,6 @@ public interface WorldMap {
     void move(Animal animal);
     public void addObserver(MapChangeListener observer);
     public abstract Boundary getCurrentBounds();
-
+    public void addGrasses(int grassNumber);
 
 }

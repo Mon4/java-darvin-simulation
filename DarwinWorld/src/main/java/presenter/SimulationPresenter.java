@@ -29,12 +29,6 @@ public class SimulationPresenter implements MapChangeListener {
         this.map = map;
         map.addObserver(this);
 
-        Simulation simulation = new Simulation(this.map);
-        List<Simulation> simulations = new ArrayList<>();
-        simulations.add(simulation);
-        SimulationEngine simulationEngine = new SimulationEngine(simulations);
-        simulationEngine.runAsyncInThreadPool();
-
         Platform.runLater(() -> {
             drawMap(map);
         });

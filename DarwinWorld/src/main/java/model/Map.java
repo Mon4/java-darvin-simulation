@@ -28,6 +28,7 @@ public class Map implements WorldMap {
 
             Grass grass = new Grass(new Vector2d(x, y));
             grasses.put(new Vector2d(x, y), grass);
+            mapChanged("grasses added");
         }
     }
 
@@ -55,17 +56,6 @@ public class Map implements WorldMap {
         for(MapChangeListener observer : observers){
             observer.mapChanged(this, message);
         }
-    }
-
-    @Override
-    public boolean place(Animal animal){
-        int x = animal.getPosition().getX();
-        int y = animal.getPosition().getY();
-
-        Vector2d position = new Vector2d(x, y);
-            animals.put(position, animal);
-            mapChanged("animal was placed on position: " + position.toString());
-            return true;
     }
 
     @Override

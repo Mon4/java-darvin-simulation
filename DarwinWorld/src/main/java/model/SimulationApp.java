@@ -48,6 +48,8 @@ public class SimulationApp extends Application {
         simulations.add(simulation);
         SimulationEngine simulationEngine = new SimulationEngine(simulations);
         simulationEngine.runAsyncInThreadPool();
+        simulationEngine.awaitSimulationsEnd(simulationEngine);
+
         presenter.setWorldMap(map);
 
         Stage stage = new Stage();

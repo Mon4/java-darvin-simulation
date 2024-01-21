@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class SimulationEngine implements Runnable {
+public class SimulationEngine {
     private List<Simulation> simulations;
     private List<Thread> threads;
     private ExecutorService executorService;
@@ -16,11 +16,6 @@ public class SimulationEngine implements Runnable {
         this.executorService = Executors.newFixedThreadPool(4);
     }
 
-    @Override
-    public void run() {
-        System.out.println(Thread.currentThread() + " Thread started.");
-        this.simulations.get(0).run();
-    }
     public void awaitSimulationsEnd(Object threadsOrExecutorService){
         if (threadsOrExecutorService instanceof ExecutorService){
             ExecutorService executorService = (ExecutorService) threadsOrExecutorService;

@@ -9,10 +9,10 @@ public class Map implements WorldMap {
     final private List<MapChangeListener> observers = new ArrayList<>();
     final private int width;
     final private int height;
-    int up = getCurrentBounds().upperRight().getY();
-    int down = getCurrentBounds().lowerLeft().getY();
-    int left = getCurrentBounds().lowerLeft().getX();
-    int right = getCurrentBounds().upperRight().getX();
+    int down;
+    int left;
+    int up;
+    int right;
 
     @Override
     public java.util.Map<Vector2d, LinkedList<Animal>> getAnimals() {return animals;}
@@ -32,7 +32,7 @@ public class Map implements WorldMap {
         }
     }
 
-    private void addAnimal(Vector2d vector2d, Animal animal){
+    public void addAnimal(Vector2d vector2d, Animal animal){
         Vector2d v = animal.getPosition();
         LinkedList<Animal> animalsList = new LinkedList<Animal>();
         if (animals.get(v) != null){
@@ -53,14 +53,16 @@ public class Map implements WorldMap {
             Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy);
             addAnimal(new Vector2d(x, y), animal);
         }
-        Animal a = new Animal(new Vector2d(2, 2));
-        animals.put(new Vector2d(2, 2), new LinkedList<>(List.of(a)));
     }
 
 
     public Map(int width, int height) {
         this.height = height;
         this.width = width;
+        int down = 0;
+        int left = 0;
+        this.up = getCurrentBounds().upperRight().getY();
+        this.right = getCurrentBounds().upperRight().getX();
     }
 
     public void removeAnimal(Animal animal){
@@ -109,10 +111,7 @@ public class Map implements WorldMap {
         removeAnimal(animal);
         animal.move(this);
         addAnimal(animal.getPosition(), animal);
-//        animals.put(animal.getPosition(), new LinkedList<>(List.of(animal)));
         mapChanged("animal moved");
-//        mapChanged("Animal was moved from: " + oldPosition.toString() + " to position: "
-//                + animal.getPosition().toString());
     }
 
 

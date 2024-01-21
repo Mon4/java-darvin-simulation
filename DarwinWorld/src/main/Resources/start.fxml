@@ -24,11 +24,6 @@
                     <TextField fx:id="mapHeightText" text="10"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
-                    <Label text="map type" alignment="CENTER_RIGHT"/>
-                    <ComboBox fx:id="mapTypeCombo"/>
-                </HBox>
-
-                <HBox alignment="CENTER_RIGHT">
                     <Label text="start animal number"/>
                     <TextField fx:id="startAnimalsText" text="10"/>
                 </HBox>

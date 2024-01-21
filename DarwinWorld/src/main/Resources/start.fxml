@@ -72,7 +72,7 @@
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="genome length"/>
-                    <TextField fx:id="genomeLen" text="10"/>
+                    <TextField fx:id="genomeLenText" text="5"/>
                 </HBox>
             </VBox>
         </GridPane>

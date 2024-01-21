@@ -13,6 +13,7 @@ public class Animal implements WorldElement{
     private int dnaIndex;
     private int childrenNumber;
     private int lifeSpan;
+    private int genomeLen;
 
     @Override
     public Vector2d getPosition() {
@@ -34,11 +35,12 @@ public class Animal implements WorldElement{
     }
 
     // regular animal
-    public Animal(Vector2d position, int newAnimalEnergy) {
+    public Animal(Vector2d position, int newAnimalEnergy, int genomeLen) {
         this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
         this.position = position;
         this.energy = newAnimalEnergy;
-        this.dna = new ArrayList<>(List.of(0, 1));
+        this.genomeLen = genomeLen;
+        this.dna = generateGenome(this.genomeLen);
         this.dnaIndex = new Random().nextInt(dna.size());
     }
 
@@ -57,6 +59,16 @@ public class Animal implements WorldElement{
     public boolean ifDead(){
         return this.energy == 0;
     }
+
+    private List<Integer> generateGenome(int genomeLen){
+        List<Integer> dna = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i<genomeLen; i++){
+            dna.add(random.nextInt(0, 8));
+        }
+        return dna;
+    }
+
 
     private void turnBack(){
         for(int i = 0; i < 4; i ++)

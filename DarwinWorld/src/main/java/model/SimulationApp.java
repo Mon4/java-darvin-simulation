@@ -33,7 +33,8 @@ public class SimulationApp extends Application {
     }
 
     public void startNewSimulation(int grassNumber, int animalsNumber, int width, int height, int newAnimalEnergy,
-                                   int grassEnergy, int newGrassNumber) throws IOException{
+                                   int grassEnergy, int newGrassNumber, int genomeLen, int minReproductionEnergy,
+                                   int useReproductionEnergy) throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane viewRoot = loader.load();
@@ -41,9 +42,9 @@ public class SimulationApp extends Application {
         SimulationPresenter presenter = loader.getController();
         Map map = new Map(width, height);
         map.addGrasses(grassNumber);
-        map.addAnimals(animalsNumber, newAnimalEnergy);
+        map.addAnimals(animalsNumber, newAnimalEnergy, genomeLen);
 
-        Simulation simulation = new Simulation(map, newGrassNumber, grassEnergy);
+        Simulation simulation = new Simulation(map, newGrassNumber, grassEnergy, minReproductionEnergy, useReproductionEnergy);
         List<Simulation> simulations = new ArrayList<>();
         simulations.add(simulation);
         SimulationEngine simulationEngine = new SimulationEngine(simulations);

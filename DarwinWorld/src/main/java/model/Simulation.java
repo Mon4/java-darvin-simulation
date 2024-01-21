@@ -9,12 +9,16 @@ public class Simulation implements Runnable{
     private final WorldMap map;
     private final int newGrass;
     private final int grassEnergy;
+    private final int minReproductionEnergy;
+    private final int useReproductionEnergy;
 
 
-    public Simulation(WorldMap map, int newGrass, int grassEnergy) {
+    public Simulation(WorldMap map, int newGrass, int grassEnergy, int minReproductionEnergy, int useReproductionEnergy) {
         this.map = map;
         this.newGrass = newGrass;
         this.grassEnergy = grassEnergy;
+        this.minReproductionEnergy = minReproductionEnergy;
+        this.useReproductionEnergy = useReproductionEnergy;
     }
 
     public void run(){
@@ -65,6 +69,8 @@ public class Simulation implements Runnable{
 
 
             //4. procrastinate
+
+
 
             //5. adding new grasses
             try {

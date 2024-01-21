@@ -48,14 +48,14 @@ public class Map implements WorldMap {
         animals.put(vector2d, animalsList);
     }
 
-    public void addAnimals(int animalsNumber, int newAnimalEnergy){
+    public void addAnimals(int animalsNumber, int newAnimalEnergy, int genomeLen){
         Random rand = new Random();
         int x, y;
         for (int i = 0; i < animalsNumber; i++) {
             x = rand.nextInt(0, width+1);
             y = rand.nextInt(0, height+1);
 
-            Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy);
+            Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy, genomeLen);
             addAnimal(new Vector2d(x, y), animal);
         }
     }
@@ -72,7 +72,6 @@ public class Map implements WorldMap {
 
     public void removeAnimal(Animal animal){
         Vector2d v = animal.getPosition();
-        LinkedList<Animal> animalsList = animals.get(v);
         if (animals.get(v).size()==1)
             animals.remove(v);
         else
@@ -105,13 +104,6 @@ public class Map implements WorldMap {
         return null;
     }
 
-//    public int getAnimalsNumber(){
-//        int counter = 0;
-//        for(Vector2d v : animals.keySet()){
-//            counter += animals.get(v).size();
-//        }
-//        return counter;
-//    }
     @Override
     public void move(Animal animal) {
         removeAnimal(animal);

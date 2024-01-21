@@ -2,15 +2,10 @@ package presenter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.Simulation;
 import model.SimulationApp;
-import model.SimulationEngine;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartPresenter {
     @FXML
@@ -19,8 +14,6 @@ public class StartPresenter {
     public TextField mapHeightText;
     @FXML
     public TextField grassNumberText;
-    @FXML
-    public ComboBox mapTypeCombo;
     @FXML
     public TextField startAnimalsText;
     @FXML
@@ -40,7 +33,7 @@ public class StartPresenter {
     @FXML
     public ComboBox mutationOptionCombo;
     @FXML
-    public TextField genomeLen;
+    public TextField genomeLenText;
     @FXML
     public TextField newAnimalEnergyText;
 
@@ -59,9 +52,12 @@ public class StartPresenter {
             int grassEnergy = Integer.parseInt(grassEnergyText.getText());
             int newGrassNumber = Integer.parseInt(newGrassText.getText());
             int newAnimalEnergy = Integer.parseInt(newAnimalEnergyText.getText());
+            int genomeLen = Integer.parseInt(genomeLenText.getText());
+            int minReproductionEnergy = Integer.parseInt(minReproductionEnergyText.getText());
+            int useReproductionEnergy = Integer.parseInt(useReproductionEnergyText.getText());
 
-
-            application.startNewSimulation(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy, newGrassNumber);
+            application.startNewSimulation(grassNumber, animalsNumber, width, height, newAnimalEnergy, grassEnergy,
+                    newGrassNumber, genomeLen, minReproductionEnergy, useReproductionEnergy);
         } catch (IOException e) {
             e.printStackTrace();
         }

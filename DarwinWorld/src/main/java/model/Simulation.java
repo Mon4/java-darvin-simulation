@@ -19,32 +19,31 @@ public class Simulation implements Runnable{
         while(true){
             //1. remove dead
             Map<Vector2d, LinkedList<Animal>> animals = map.getAnimals();
-            for(Vector2d v : animals.keySet()) {
-                LinkedList<Animal> animalsList = animals.get(v);
+            Map<Vector2d, LinkedList<Animal>> copiedAnimals = new HashMap<>(animals);
+
+            for(Vector2d v : copiedAnimals.keySet()) {
+                LinkedList<Animal> animalsList = copiedAnimals.get(v);
                 for(Animal animal : animalsList){
-                    try {
                         if (animal.ifDead()){
                             System.out.println("i'm dead");
-                            Thread.sleep(100);
                             map.removeAnimal(animal);
                         }
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    if (animalsList.isEmpty())
+                        break;
                 }
             }
 
 
             //2. animals moving
             animals = map.getAnimals();
-            Map<Vector2d, LinkedList<Animal>> copiedAnimals = new HashMap<>(animals);
+            copiedAnimals = new HashMap<>(animals);
             for(Vector2d v : copiedAnimals.keySet()) {
                 LinkedList<Animal> animalsList = copiedAnimals.get(v);
                 for(Animal animal : animalsList){
                     try {
                         map.move(animal);
                         animal.changeEnergy(-10);
-                        Thread.sleep(100);
+                        Thread.sleep(10);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -53,6 +52,8 @@ public class Simulation implements Runnable{
 
 
             //3. eat grass
+
+            
 
             //4. procrastinate
 

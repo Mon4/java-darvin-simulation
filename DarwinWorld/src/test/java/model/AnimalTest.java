@@ -147,5 +147,44 @@ public class AnimalTest {
         assertEquals(MapDirection.NORTHWEST, animal.getCurrentForwarding());
     }
 
+    @Test
+    public void twoAnimalsInOneField(){
+        ArrayList<Integer> dna = new ArrayList<>(List.of(0));
+        Animal animal1 = new Animal(new Vector2d(2, 2), 50, dna, MapDirection.NORTH);
+        Animal animal2 = new Animal(new Vector2d(3, 3), 50, dna, MapDirection.WEST);
+
+        Map map = new Map(5, 5);
+        map.addAnimal(animal1.getPosition(), animal1);
+        map.addAnimal(animal2.getPosition(), animal2);
+
+        map.move(animal1);
+        map.move(animal2);
+        map.move(animal1);
+        map.move(animal2);
+
+        Vector2d animal1Pos = animal1.getPosition();
+        Vector2d animal2Pos = animal2.getPosition();
+
+        assertEquals(new Vector2d(2, 4), animal1Pos);
+        assertEquals(new Vector2d(1, 3), animal2Pos);
+
+    }
+
+    @Test
+    public void animalAndGrass(){
+        ArrayList<Integer> dna = new ArrayList<>(List.of(0));
+        Animal animal = new Animal(new Vector2d(2, 2), 50, dna, MapDirection.NORTH);
+        Grass grass = new Grass(new Vector2d(2, 3));
+
+        Map map = new Map(5, 5);
+        map.addAnimal(animal.getPosition(), animal);
+        map.setGrasses(new Vector2d(2, 3), grass);
+        map.move(animal);
+
+        Vector2d animalPos = animal.getPosition();
+
+        assertEquals(new Vector2d(2, 3), animalPos);
+
+    }
 
 }

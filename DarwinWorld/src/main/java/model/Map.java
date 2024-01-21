@@ -14,8 +14,11 @@ public class Map implements WorldMap {
     int up;
     int right;
 
+
     @Override
     public java.util.Map<Vector2d, LinkedList<Animal>> getAnimals() {return animals;}
+
+    public void setGrasses(Vector2d vector2d, Grass grass) {this.grasses.put(vector2d, grass);}
 
     public void addGrasses(int grassNumber){
         Random rand = new Random();
@@ -59,17 +62,19 @@ public class Map implements WorldMap {
     public Map(int width, int height) {
         this.height = height;
         this.width = width;
-        int down = 0;
-        int left = 0;
+        this.down = 0;
+        this.left = 0;
         this.up = getCurrentBounds().upperRight().getY();
         this.right = getCurrentBounds().upperRight().getX();
     }
 
     public void removeAnimal(Animal animal){
         Vector2d v = animal.getPosition();
-        animals.get(v).remove(animal);
-        if (animals.get(v).isEmpty())
+        LinkedList<Animal> animalsList = animals.get(v);
+        if (animals.get(v).size()==1)
             animals.remove(v);
+        else
+            animals.get(v).remove(animal);
         mapChanged("removed animal");
     }
 
@@ -107,7 +112,6 @@ public class Map implements WorldMap {
 //    }
     @Override
     public void move(Animal animal) {
-        Vector2d oldPosition = animal.getPosition();
         removeAnimal(animal);
         animal.move(this);
         addAnimal(animal.getPosition(), animal);

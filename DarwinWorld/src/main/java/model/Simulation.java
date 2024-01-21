@@ -3,10 +3,10 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class Simulation implements Runnable{
-    private int currentAnimalIndex = 0;
     private final WorldMap map;
     private final int newGrass;
 
@@ -17,27 +17,36 @@ public class Simulation implements Runnable{
     }
 
     public void run(){
-
-        Map<Vector2d, Animal> animals = map.getAnimals();
+        //1. remove dead
 
         while(true){
-            //2. animals moving
-//            for(int i=0; i<animals.size(); i++) {
-//                Animal currentAnimal = animals.get(currentAnimalIndex);
-//                this.map.move(currentAnimal);
-//                this.currentAnimalIndex = (currentAnimalIndex + 1) % animals.size();
-//                currentAnimal.changeEnergy(-10);
-//
-//            }
-            //5. adding new grasses
-            this.map.addGrasses(10);
-            try {
+        //2. animals moving
+        Map<Vector2d, LinkedList<Animal>> animals = map.getAnimals();
+        Map<Vector2d, LinkedList<Animal>> copiedAnimals = new HashMap<>(animals);
+        for(Vector2d v : copiedAnimals.keySet()) {
+            LinkedList<Animal> animalsList = copiedAnimals.get(v);
+            for(Animal animal : animalsList){
+                try {
+                    map.move(animal);
+                    animal.changeEnergy(-10);
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
 
+        //3. eat grass
 
+        //4. procrastinate
+
+        //5. adding new grasses
+        try {
+            this.map.addGrasses(newGrass);
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         }
     }

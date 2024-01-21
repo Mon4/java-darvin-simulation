@@ -39,7 +39,7 @@
 
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="daily new grass number"/>
-                    <TextField fx:id="newGrassText" text="5"/>
+                    <TextField fx:id="newGrassText" text="1"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="new animal energy level"/>

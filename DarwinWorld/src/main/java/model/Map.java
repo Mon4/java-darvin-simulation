@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 public class Map implements WorldMap {
-    private java.util.Map<Vector2d, Animal> animals = new HashMap<>();
+    private java.util.Map<Vector2d, LinkedList<Animal>> animals = new HashMap<>();
     private java.util.Map<Vector2d, Grass> grasses = new HashMap<>();
     private java.util.Map<Vector2d, PoisonFruit> poisonFruits = new HashMap<>();
     final private List<MapChangeListener> observers = new ArrayList<>();
@@ -15,7 +15,7 @@ public class Map implements WorldMap {
     int right = getCurrentBounds().upperRight().getX();
 
     @Override
-    public java.util.Map<Vector2d, Animal> getAnimals() {return animals;}
+    public java.util.Map<Vector2d, LinkedList<Animal>> getAnimals() {return animals;}
 
     public void addGrasses(int grassNumber){
         Random rand = new Random();
@@ -32,24 +32,43 @@ public class Map implements WorldMap {
         }
     }
 
+    private void addAnimal(Vector2d vector2d, Animal animal){
+        Vector2d v = animal.getPosition();
+        LinkedList<Animal> animalsList = new LinkedList<Animal>();
+        if (animals.get(v) != null){
+            if (! animals.get(v).isEmpty())
+                animalsList = animals.get(v);
+        }
+        animalsList.add(animal);
+        animals.put(vector2d, animalsList);
+    }
+
     public void addAnimals(int animalsNumber, int newAnimalEnergy){
         Random rand = new Random();
         int x, y;
-        for (int i = 0; i < animalsNumber; i++) {  // może przed stworzeniem symulacji
+        for (int i = 0; i < animalsNumber; i++) {
             x = rand.nextInt(0, width+1);
             y = rand.nextInt(0, height+1);
 
             Animal animal = new Animal(new Vector2d(x, y), newAnimalEnergy);
-            animals.put(new Vector2d(x, y), animal);
+            addAnimal(new Vector2d(x, y), animal);
         }
+        Animal a = new Animal(new Vector2d(2, 2));
+        animals.put(new Vector2d(2, 2), new LinkedList<>(List.of(a)));
     }
 
 
-
     public Map(int width, int height) {
-//        super();
         this.height = height;
         this.width = width;
+    }
+
+    public void removeAnimal(Animal animal){
+        Vector2d v = animal.getPosition();
+        animals.get(v).remove(animal);
+        if (animals.get(v).isEmpty())
+            animals.remove(v);
+        mapChanged("removed animal");
     }
 
     public void mapChanged(String message){
@@ -69,7 +88,7 @@ public class Map implements WorldMap {
             return grasses.get(position);
         }
         else if (animals.get(position) != null){
-            return animals.get(position);
+            return animals.get(position).getFirst();
         }
         else if (poisonFruits.get(position) != null){
             return poisonFruits.get(position);
@@ -77,14 +96,23 @@ public class Map implements WorldMap {
         return null;
     }
 
+//    public int getAnimalsNumber(){
+//        int counter = 0;
+//        for(Vector2d v : animals.keySet()){
+//            counter += animals.get(v).size();
+//        }
+//        return counter;
+//    }
     @Override
     public void move(Animal animal) {
         Vector2d oldPosition = animal.getPosition();
-        animals.remove(oldPosition);
+        removeAnimal(animal);
         animal.move(this);
-        animals.put(animal.getPosition(), animal);
-        mapChanged("Animal was moved from: " + oldPosition.toString() + " to position: "
-                + animal.getPosition().toString());
+        addAnimal(animal.getPosition(), animal);
+//        animals.put(animal.getPosition(), new LinkedList<>(List.of(animal)));
+        mapChanged("animal moved");
+//        mapChanged("Animal was moved from: " + oldPosition.toString() + " to position: "
+//                + animal.getPosition().toString());
     }
 
 

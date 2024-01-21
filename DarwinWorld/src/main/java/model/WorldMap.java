@@ -1,14 +1,17 @@
 package model;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 public interface WorldMap {
-    java.util.Map<Vector2d, Animal> getAnimals();
+    java.util.Map<Vector2d, LinkedList<Animal>> getAnimals();
     boolean isOccupied(Vector2d position);
     WorldElement objectAt(Vector2d position);
-    void move(Animal animal);
+    public void move(Animal animal);
     public void addObserver(MapChangeListener observer);
     public abstract Boundary getCurrentBounds();
     public void addGrasses(int grassNumber);
+    public void removeAnimal(Animal animal);
+//    public int getAnimalsNumber();
 
 }

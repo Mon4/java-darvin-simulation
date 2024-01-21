@@ -21,6 +21,9 @@ public class Animal implements WorldElement{
     public MapDirection getCurrentForwarding() {
         return this.currentForwarding;
     }
+    public int getEnergy() {
+        return this.energy;
+    }
 
     //animal to map ??
     public Animal(Vector2d position) {

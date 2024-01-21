@@ -8,11 +8,13 @@ import java.util.Map;
 public class Simulation implements Runnable{
     private final WorldMap map;
     private final int newGrass;
+    private final int grassEnergy;
 
 
-    public Simulation(WorldMap map, int newGrass) {
+    public Simulation(WorldMap map, int newGrass, int grassEnergy) {
         this.map = map;
         this.newGrass = newGrass;
+        this.grassEnergy = grassEnergy;
     }
 
     public void run(){
@@ -43,17 +45,24 @@ public class Simulation implements Runnable{
                     try {
                         map.move(animal);
                         animal.changeEnergy(-10);
-                        Thread.sleep(10);
+                        Thread.sleep(1000);
+                        if (copiedAnimals.get(v).isEmpty())
+                            break;
+
+                        //3. eat grass
+                        Map<Vector2d, Grass> grasses = map.getGrasses();
+                        if(grasses.get(animal.getPosition()) != null){
+                            animal.changeEnergy(grassEnergy);
+                            grasses.remove(animal.getPosition());
+                        }
+
+
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
 
-
-            //3. eat grass
-
-            
 
             //4. procrastinate
 
@@ -66,6 +75,8 @@ public class Simulation implements Runnable{
             }
 
             System.out.println("1 ");
+            if(map.getAnimals().isEmpty())
+                break;
         }
     }
 }

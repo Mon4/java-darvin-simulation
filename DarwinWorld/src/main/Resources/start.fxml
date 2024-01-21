@@ -34,7 +34,7 @@
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start grass number"/>
-                    <TextField fx:id="grassNumberText" text="10"/>
+                    <TextField fx:id="grassNumberText" text="100"/>
                 </HBox>
 
                 <HBox alignment="CENTER_RIGHT">

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 public interface WorldMap {
@@ -12,6 +11,6 @@ public interface WorldMap {
     public abstract Boundary getCurrentBounds();
     public void addGrasses(int grassNumber);
     public void removeAnimal(Animal animal);
-//    public int getAnimalsNumber();
+    public java.util.Map<Vector2d, Grass> getGrasses();
 
 }

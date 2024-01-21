@@ -17,6 +17,7 @@ public class Grass implements WorldElement {
 
     @Override
     public boolean isAt(Vector2d position) {
+
         return Objects.equals(this.position, position);
     }
 

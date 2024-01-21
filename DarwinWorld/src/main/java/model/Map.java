@@ -17,6 +17,8 @@ public class Map implements WorldMap {
 
     @Override
     public java.util.Map<Vector2d, LinkedList<Animal>> getAnimals() {return animals;}
+    public java.util.Map<Vector2d, Grass> getGrasses() {return grasses;}
+
 
     public void setGrasses(Vector2d vector2d, Grass grass) {this.grasses.put(vector2d, grass);}
 

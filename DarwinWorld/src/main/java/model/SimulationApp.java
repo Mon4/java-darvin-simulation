@@ -43,7 +43,7 @@ public class SimulationApp extends Application {
         map.addGrasses(grassNumber);
         map.addAnimals(animalsNumber, newAnimalEnergy);
 
-        Simulation simulation = new Simulation(map, newGrassNumber);
+        Simulation simulation = new Simulation(map, newGrassNumber, grassEnergy);
         List<Simulation> simulations = new ArrayList<>();
         simulations.add(simulation);
         SimulationEngine simulationEngine = new SimulationEngine(simulations);

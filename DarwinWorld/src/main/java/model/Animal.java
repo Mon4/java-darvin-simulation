@@ -25,12 +25,16 @@ public class Animal implements WorldElement{
     public int getEnergy() {
         return this.energy;
     }
+    public int getGenomeLen() {return genomeLen;}
+    public List<Integer> getDna() {return dna;}
 
     //animal to map ??
-    public Animal(Vector2d position) {
+    public Animal(Vector2d position, int newAnimalEnergy, int genomeLen, List<Integer> dna) {
         this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
         this.position = position;
-        this.dna = new ArrayList<>(List.of(0, 1));
+        this.energy = newAnimalEnergy;
+        this.genomeLen = genomeLen;
+        this.dna = dna;
         this.dnaIndex = new Random().nextInt(dna.size());
     }
 

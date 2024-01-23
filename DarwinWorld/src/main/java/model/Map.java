@@ -92,11 +92,10 @@ public class Map implements WorldMap {
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        if (grasses.get(position) != null){
+        if (animals.get(position) != null){
+            return animals.get(position).getFirst();}
+        else if (grasses.get(position) != null){
             return grasses.get(position);
-        }
-        else if (animals.get(position) != null){
-            return animals.get(position).getFirst();
         }
         else if (poisonFruits.get(position) != null){
             return poisonFruits.get(position);

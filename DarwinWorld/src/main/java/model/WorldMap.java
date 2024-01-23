@@ -12,5 +12,6 @@ public interface WorldMap {
     public void addGrasses(int grassNumber);
     public void removeAnimal(Animal animal);
     public java.util.Map<Vector2d, Grass> getGrasses();
+    public void addAnimal(Vector2d vector2d, Animal animal);
 
 }

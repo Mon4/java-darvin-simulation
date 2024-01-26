@@ -22,7 +22,7 @@ public class Simulation implements Runnable{
             SimulationStage sim = new SimulationStage(map);
             sim.removeDead();
             sim.move();
-            sim.procrastinate(minReproductionEnergy, useReproductionEnergy);
+            sim.procreating(minReproductionEnergy, useReproductionEnergy);
             sim.eat(grassEnergy);
             sim.addNewGrasses(newGrass);
 

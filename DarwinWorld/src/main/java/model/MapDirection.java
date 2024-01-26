@@ -1,6 +1,8 @@
 package model;
 
-public enum MapDirection {
+import java.io.Serializable;
+
+public enum MapDirection implements Serializable {
     NORTH, NORTHEAST, NORTHWEST, SOUTH, SOUTHEAST, SOUTHWEST, WEST, EAST;
     @Override
     public String toString() {

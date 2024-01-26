@@ -48,7 +48,8 @@ public class SimulationApp extends Application {
         List<Simulation> simulations = new ArrayList<>();
         simulations.add(simulation);
         SimulationEngine simulationEngine = new SimulationEngine(simulations);
-        simulationEngine.runAsyncInThreadPool();
+        simulationEngine.runAsync();
+//        simulationEngine.runAsyncInThreadPool();
         simulationEngine.awaitSimulationsEnd(simulationEngine);
 
         presenter.setWorldMap(map);

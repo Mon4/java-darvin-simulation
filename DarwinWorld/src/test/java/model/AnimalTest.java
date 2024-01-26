@@ -148,7 +148,7 @@ public class AnimalTest {
     }
 
     @Test
-    public void twoAnimalsInOneField(){
+    public void twoAnimalsInOneFieldCrossing(){
         ArrayList<Integer> dna = new ArrayList<>(List.of(0));
         Animal animal1 = new Animal(new Vector2d(2, 2), 50, dna, MapDirection.NORTH);
         Animal animal2 = new Animal(new Vector2d(3, 3), 50, dna, MapDirection.WEST);

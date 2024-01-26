@@ -45,4 +45,17 @@ public class SimulationEngine {
             executorService.submit(simulation);
         }
     }
+
+    public void runSync() {
+        simulations.forEach(Simulation::run);
+    }
+
+    public void runAsync() {
+        for (Simulation simulation : simulations) {
+            Thread thread = new Thread(simulation);
+            threads.add(thread);
+            thread.start();
+        }
+    }
+
 }

@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Vector2d {
+public class Vector2d implements Serializable {
     private final int x;
     private final int y;
 

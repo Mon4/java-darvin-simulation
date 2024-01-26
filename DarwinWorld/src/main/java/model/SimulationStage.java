@@ -1,10 +1,10 @@
 package model;
 
+import org.apache.commons.lang3.SerializationUtils;
 import java.util.Map;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 public class SimulationStage {
 
     WorldMap map;
@@ -22,13 +22,17 @@ public class SimulationStage {
 
         for (Vector2d v : copiedAnimals.keySet()) {
             LinkedList<Animal> animalsList = copiedAnimals.get(v);
-            for (Animal animal : animalsList) {
-                if (animal.ifDead()) {
-                    System.out.println("i'm dead");
-                    map.removeAnimal(animal);
+            LinkedList<Animal> copiedAnimalsList = SerializationUtils.clone(animalsList);
+            for (Animal animal : copiedAnimalsList) {
+                try {
+                    if (animal.ifDead()) {
+                        System.out.println("i'm dead");
+                        map.removeAnimal(animal);
+                    }
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                if (animalsList.isEmpty())
-                    break;
             }
         }
     }
@@ -39,13 +43,13 @@ public class SimulationStage {
 
         for (Vector2d v : copiedAnimals.keySet()) {
             LinkedList<Animal> animalsList = copiedAnimals.get(v);
-            for (Animal animal : animalsList) {
+            LinkedList<Animal> copiedAnimalsList = SerializationUtils.clone(animalsList);
+
+            for (Animal animal : copiedAnimalsList) {
                 try {
                     map.move(animal);
                     animal.changeEnergy(-10);
-                    Thread.sleep(1000);
-                    if (animalsList.isEmpty())
-                        break;
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -87,31 +91,6 @@ public class SimulationStage {
                 .limit(2)
                 .collect(Collectors.toCollection(LinkedList::new));}
 
-    public void procrastinate(int minReproductionEnergy, int useReproductionEnergy){
-        this.animals = map.getAnimals();
-        this.copiedAnimals = new HashMap<>(animals);
-        for (Vector2d v : copiedAnimals.keySet()) {
-            LinkedList<Animal> animalsList = copiedAnimals.get(v);
-                LinkedList<Animal> animalsReady = animalsList.stream()
-                        .filter(x -> x.getEnergy() > minReproductionEnergy)
-                        .collect(Collectors.toCollection(LinkedList::new));
-            while (animalsReady.size() >= 2){
-                    LinkedList<Animal> nextTwoAnimals = getAnimalsWithHighestEnergy(animalsReady);
-                    animalsReady.removeAll(nextTwoAnimals);
-
-                    Vector2d pos = nextTwoAnimals.get(0).getPosition();
-                    Animal parent1 = nextTwoAnimals.get(0);
-                    Animal parent2 = nextTwoAnimals.get(1);
-
-                    List<Integer> dna = generateDNA(parent1, parent2);
-                    Animal animal = new Animal(pos, useReproductionEnergy*2, parent1.getGenomeLen(), dna);
-                    map.addAnimal(pos, animal);
-
-                    parent1.changeEnergy(-useReproductionEnergy);
-                    parent2.changeEnergy(-useReproductionEnergy);
-            }
-        }
-    }
 
     private List<Integer> generateDNA(Animal parent1, Animal parent2) {
         int energy1 = parent1.getEnergy();
@@ -123,6 +102,11 @@ public class SimulationStage {
         Random random = new Random();
         int side = random.nextInt(2);
         int numberOfMutations = random.nextInt(genLen);
+
+        // checks number of mutations allowed in dna
+        while (numberOfMutations > genLen){
+            numberOfMutations = random.nextInt(genLen);
+        }
 
         List<Integer> dna1;
         List<Integer> dna2;
@@ -152,17 +136,45 @@ public class SimulationStage {
                 .collect(Collectors.toList());
 
         //mutations
-        for(int i = 0; i < numberOfMutations; i++){  // powinno uwzględniać, że już zrobiło podmiankę na danej pozycji
+        for(int i = 0; i < numberOfMutations; i++){
             int pos = random.nextInt(genLen);
             int newGen = random.nextInt(8);
             dna.set(pos, newGen);
         }
-
         return dna;
-
-
-
     }
+    private void procreatingTwoAnimals(LinkedList<Animal> nextTwoAnimals, int useReproductionEnergy){
+        Vector2d pos = nextTwoAnimals.get(0).getPosition();
+        Animal parent1 = nextTwoAnimals.get(0);
+        Animal parent2 = nextTwoAnimals.get(1);
+
+        List<Integer> dna = generateDNA(parent1, parent2);
+        Animal animal = new Animal(pos, useReproductionEnergy*2, parent1.getGenomeLen(), dna);
+        map.addAnimal(pos, animal);
+
+        parent1.changeEnergy(-useReproductionEnergy);
+        parent2.changeEnergy(-useReproductionEnergy);
+    }
+    private LinkedList<Animal> getAnimalsReadyToReproduce(LinkedList<Animal> animalsList, int minReproductionEnergy){
+        return animalsList.stream()
+                .filter(x -> x.getEnergy() > minReproductionEnergy)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+    public void procreating(int minReproductionEnergy, int useReproductionEnergy){
+        this.animals = map.getAnimals();
+        this.copiedAnimals = new HashMap<>(animals);
+        for (Vector2d v : copiedAnimals.keySet()) {
+            LinkedList<Animal> animalsList = copiedAnimals.get(v);
+            LinkedList<Animal> animalsReady = getAnimalsReadyToReproduce(animalsList, minReproductionEnergy);
+
+            while (animalsReady.size() >= 2){
+                    LinkedList<Animal> nextTwoAnimals = getAnimalsWithHighestEnergy(animalsReady);
+                    animalsReady.removeAll(nextTwoAnimals);
+                    procreatingTwoAnimals(nextTwoAnimals, useReproductionEnergy);
+            }
+        }
+    }
+
 
     public void addNewGrasses(int newGrass) {
         try {

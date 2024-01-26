@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class Animal implements WorldElement{
+public class Animal implements WorldElement, Serializable {
     private MapDirection currentForwarding;
     private Vector2d position;
     private int energy;
@@ -28,7 +29,7 @@ public class Animal implements WorldElement{
     public int getGenomeLen() {return genomeLen;}
     public List<Integer> getDna() {return dna;}
 
-    //animal to map ??
+    //animal child
     public Animal(Vector2d position, int newAnimalEnergy, int genomeLen, List<Integer> dna) {
         this.currentForwarding = MapDirection.values()[new Random().nextInt(MapDirection.values().length)];
         this.position = position;
@@ -54,6 +55,7 @@ public class Animal implements WorldElement{
         this.position = position;
         this.energy = energy;
         this.dna = dna;
+        this.genomeLen = dna.size();
         this.dnaIndex = new Random().nextInt(dna.size());
     }
 
@@ -131,4 +133,18 @@ public class Animal implements WorldElement{
         return currentForwarding.toString().substring(0, 1);
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(currentForwarding, animal.currentForwarding) && Objects.equals(position, animal.position)
+                && Objects.equals(energy, animal.energy) && Objects.equals(dna, animal.dna)
+                &&  Objects.equals(dnaIndex, animal.dnaIndex);
+    }
 }

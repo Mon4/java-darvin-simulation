@@ -1,0 +1,49 @@
+.label {
+    -fx-font-size: 15;
+    -fx-padding: 0 10 0 0;
+}
+
+.TextField{
+    -fx-padding: 0 100 0 0;
+
+}
+
+.title{
+    -fx-font-size: 25;
+    -fx-font-family: 'Pacifico', cursive;
+}
+
+.hbox{
+    -fx-alignment: center;
+}
+
+.title {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+
+.colored-background {
+    -fx-padding: 50 0 50 0;
+    -fx-background-color: #f3e8dd;
+}
+
+.button{
+    -fx-pref-width: 120;
+    -fx-pref-height: 40;
+    -fx-background-color: #dfc2a4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+}
+
+
+.marginUpDown{
+    -fx-padding: 0 0 10 0;
+    -fx-background-color: #f3e8dd;
+
+}

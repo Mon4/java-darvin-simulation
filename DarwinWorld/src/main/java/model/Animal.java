@@ -63,7 +63,7 @@ public class Animal implements WorldElement, Serializable {
 
 
     public boolean ifDead(){
-        return this.energy == 0;
+        return this.energy <= 0;
     }
 
     private List<Integer> generateGenome(int genomeLen){

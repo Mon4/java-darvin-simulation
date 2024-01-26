@@ -9,6 +9,10 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import model.*;
 
 public class SimulationPresenter implements MapChangeListener {
@@ -31,7 +35,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     private void clearGrid() {
-        gridMap.getChildren().retainAll(gridMap.getChildren().get(0)); // hack to retain visible grid lines
+        gridMap.getChildren().retainAll(gridMap.getChildren().get(0));
         gridMap.getColumnConstraints().clear();
         gridMap.getRowConstraints().clear();
     }
@@ -47,6 +51,18 @@ public class SimulationPresenter implements MapChangeListener {
         Label label = new Label(text);
         GridPane.setHalignment(label, HPos.CENTER);
         gridMap.add(label, columnIndex, rowIndex);
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+    }
+
+    private void addColor(int columnIndex, int rowIndex, Color color){
+        if (color != null){
+            Rectangle rectangle = new Rectangle(CELL_WIDTH, CELL_HEIGHT);
+            rectangle.setFill(color);
+
+            GridPane.setColumnIndex(rectangle, columnIndex);
+            GridPane.setRowIndex(rectangle, rowIndex);
+            gridMap.getChildren().add(rectangle);
+        }
     }
 
     private void addElementLabel(String text1, String text2, int columnIndex, int rowIndex){
@@ -55,9 +71,16 @@ public class SimulationPresenter implements MapChangeListener {
         GridPane.setHalignment(label1, HPos.CENTER);
         GridPane.setHalignment(label2, HPos.CENTER);
 
+        label1.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        label2.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(label1, label2);
+
+        if(text2.equals(" "))
+            vbox.getChildren().add(label1);
+        else
+            vbox.getChildren().addAll(label1, label2);
 
         gridMap.add(vbox, columnIndex, rowIndex);
     }
@@ -94,10 +117,18 @@ public class SimulationPresenter implements MapChangeListener {
                 String energy = " ";
                 if(element != null) {
                     labelContent = element.toString();
-                    if(element instanceof Animal)
+                    if(element instanceof Animal){
                         energy = Integer.toString (((Animal) element).getEnergy());
+                        addColor(x+1, y+1, Color.ANTIQUEWHITE);
+                        addElementLabel(labelContent, energy, x+1, y+1);
+                    }
+                    else if(element instanceof Grass){
+                        addColor(x+1, y+1, Color.LIGHTGREEN);
+                        addElementLabel(labelContent, energy, x+1, y+1);
+                    }
                 }
-                addElementLabel(labelContent, energy, x+1, y+1);
+                else
+                    addColor(x+1, y+1, Color.ANTIQUEWHITE);
             }
         }
     }

@@ -58,16 +58,6 @@
                     <TextField fx:id="useReproductionEnergyText" text="25"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
-                    <Label text="min mutation number"/>
-                    <TextField fx:id="minMutationEnergyText" text="10"/>
-                </HBox>
-                <Label text="Mutations" styleClass="subtitle"/>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="max mutation number"/>
-                    <TextField fx:id="maxMutationEnergyText" text="10"/>
-                </HBox>
-
-                <HBox alignment="CENTER_RIGHT">
                     <Label text="genome length"/>
                     <TextField fx:id="genomeLenText" text="5"/>
                 </HBox>

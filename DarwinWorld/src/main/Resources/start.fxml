@@ -19,31 +19,33 @@
                 <Label text="Map" styleClass="subtitle"/>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="map width" />
-                    <TextField fx:id="mapWidthText" text="15"/>
+                    <TextField fx:id="mapWidthText" text="15" onAction="#onFocusLost"/>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="map height" alignment="CENTER_RIGHT"/>
-                    <TextField fx:id="mapHeightText" text="10"/>
+                    <TextField fx:id="mapHeightText" text="10" onAction="#onFocusLost"/>
                 </HBox>
                 <Label text="Animals" styleClass="subtitle"/>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="start animal number"/>
-                    <TextField fx:id="startAnimalsText" text="10"/>
-                </HBox>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="start grass number"/>
-                    <TextField fx:id="grassNumberText" text="100"/>
+                    <TextField fx:id="startAnimalsText" text="10" onAction="#onFocusLost"/>
                 </HBox>
 
-                <Label text="Grasses" styleClass="subtitle"/>
-                <HBox alignment="CENTER_RIGHT">
-                    <Label text="daily new grass number"/>
-                    <TextField fx:id="newGrassText" text="5"/>
-                </HBox>
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="new animal energy level"/>
                     <TextField fx:id="newAnimalEnergyText" text="100"/>
                 </HBox>
+
+                <Label text="Grasses" styleClass="subtitle"/>
+                <HBox alignment="CENTER_RIGHT">
+                    <Label text="start grass number"/>
+                    <TextField fx:id="grassNumberText" text="60"/>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT">
+                    <Label text="daily new grass number"/>
+                    <TextField fx:id="newGrassText" text="5"/>
+                </HBox>
+
                 <HBox alignment="CENTER_RIGHT">
                     <Label text="energy added by eating grass"/>
                     <TextField fx:id="grassEnergyText" text="20"/>
@@ -65,7 +67,7 @@
         </GridPane>
     </center>
     <bottom >
-        <HBox alignment="CENTER" styleClass="marginUpDown" >
+        <HBox alignment="CENTER" styleClass="marginUpDown">
         <Button text="Start" alignment="CENTER" onAction="#onSimulationStartClicked"/>
         </HBox>
     </bottom>

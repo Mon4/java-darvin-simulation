@@ -1,6 +1,6 @@
 # Darwin Simulation in Java
 
-This project shows simulation of animals life. They are walking on the map. Every day they move one field, each of them takes selected amount of energy.
+This project shows simulation of animal life. They are walking on the map. Every day they move one field, each of them takes selected amount of energy.
 
 On the map you can see animal orientation (direction where it's looking) and animal energy.
 
